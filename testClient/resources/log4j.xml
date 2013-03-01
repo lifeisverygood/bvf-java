@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration debug="true" xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+         <layout class="org.apache.log4j.PatternLayout">
+         	<param name="ConversionPattern" value="%d{ISO8601} %-5p [%t] %c - %m%n"/>
+         </layout>	    
+	</appender>
+
+	<appender name="R" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="E:/logs/BUSINESS_VALIDATION.log"/>
+	 	<param name="MaxFileSize" value="1024KB"/>
+	 	<param name="MaxBackupIndex" value="3"/>
+
+		<layout class="org.apache.log4j.PatternLayout">
+		 	<param name="ConversionPattern" value="%d %-5p [%t] %c - %m%n"/>
+		</layout>	    
+	</appender>
+	    
+	    <category name="org.springframework">
+         <priority value="info"/>
+    </category >
+
+	<!-- <logger name="org.springframework"> <level value="ALL"/> <appender-ref 
+		ref="R"/> </logger> -->
+ 	<logger name="com.rajeshpg.brv">
+	    <level value="ERROR"/>
+	    <appender-ref ref="R"/>
+    </logger>   
+ 	    
+    <root>
+        <priority value ="ALL"/>
+        <appender-ref ref="R"/>
+    </root>
+
+</log4j:configuration>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+<!-- 	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>classpath:resources/log4j.properties</value>
+			</list>
+		</property>
+	</bean> -->
+<!-- 
+	<bean id="dbMessageProvider" name="dbMessageProvider"
+		class="com.rajeshpg.brv.messageprovider.DBMessageProvider" init-method="configure">
+		<constructor-arg ref="messageProviderConfig" />
+		
+	</bean> -->
+	
+	<util:properties id="messageProviderConfig"
+		location="classpath:/resources/MessageProviderConfig.properties" />
+
+	<bean id="messageProvider" name="messageProvider"
+		class="com.rajeshpg.brv.messageprovider.PropsMessageProvider" init-method="configure">
+		<constructor-arg ref="messageProviderConfig" />
+	</bean>
+	
+	
+	<bean id="brv1" class="com.rajeshpg.brv.validator.BusinessRuleValidator">
+<!-- 		<property name="businessRuleSet" ref="rectBoxBusinessRules" /> -->
+		<property name="messageProvider" ref="messageProvider" />
+	</bean>
+	
+		<bean id="brv2" class="com.rajeshpg.brv.validator.BusinessRuleValidator">
+<!-- 		<property name="businessRuleSet" ref="rectBoxBusinessRules" /> -->
+		<property name="messageProvider" ref="messageProvider" />
+	</bean>
+
+	
+
+	
+	<!-- set of business rules -->
+	<bean id="rule1" name="rule1"
+		class="com.rajeshpg.brv.core.BusinessRuleSet">
+		<property name="rules">
+			<!-- rules -->
+			<set>
+				<bean name="rectBoxBreadthRule" class="client.businessRules.RectBoxBreadthRule" />
+			</set>
+		</property>
+	</bean>
+	<bean id="rule2" name="rule2"
+		class="com.rajeshpg.brv.core.BusinessRuleSet">
+		<property name="rules">
+			<!-- rules -->
+			<set>
+				<bean name="rectBoxLengthRule" class="client.businessRules.RectBoxLengthRule" />
+			</set>
+		</property>
+	</bean>
+</beans>
